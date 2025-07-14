@@ -21,7 +21,7 @@ public class StartPackPopup : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        PurchaserManager.InitializeSucceeded += PurchaserManager_InitializeSucceeded;
+        // PurchaserManager.InitializeSucceeded += PurchaserManager_InitializeSucceeded;
         InitIAP();
         // InitPacks();
         btnClose.OnPointerClickCallBack_Completed.AddListener(TouchClose);
@@ -33,7 +33,7 @@ public class StartPackPopup : MonoBehaviour
 
     private void OnDestroy()
     {
-        PurchaserManager.InitializeSucceeded -= PurchaserManager_InitializeSucceeded;
+        // PurchaserManager.InitializeSucceeded -= PurchaserManager_InitializeSucceeded;
     }
 
     // Update is called once per frame
@@ -49,15 +49,15 @@ public class StartPackPopup : MonoBehaviour
 
 
     public void InitIAP() {
-        if (PurchaserManager.instance.IsInitialized())
-        {
-            txtPrice.text = PurchaserManager.instance.GetLocalizedPriceString(Config.IAP_ID.tilematch_starter_pack.ToString());
-            btnBuy.Interactable = true;
-        }
-        else {
-            txtPrice.text = "";
-            btnBuy.Interactable = false;
-        }
+        // if (PurchaserManager.instance.IsInitialized())
+        // {
+        //     txtPrice.text = PurchaserManager.instance.GetLocalizedPriceString(Config.IAP_ID.tilematch_starter_pack.ToString());
+        //     btnBuy.Interactable = true;
+        // }
+        // else {
+        //     txtPrice.text = "";
+        //     btnBuy.Interactable = false;
+        // }
     }
 
     public void InitPacks() {
@@ -86,24 +86,24 @@ public class StartPackPopup : MonoBehaviour
         BuyStartPackSuccess();
         return;
 #endif
-        PurchaserManager.instance.BuyConsumable(Config.IAP_ID.tilematch_starter_pack, (string _iapID, PurchaserManager.IAP_CALLBACK_STATE _state) =>
-        {
-            if (_state == PurchaserManager.IAP_CALLBACK_STATE.SUCCESS)
-            {
-                lockGroup.gameObject.SetActive(false);
-                if (_iapID.Equals(Config.IAP_ID.tilematch_starter_pack.ToString()))
-                {
-                    //Buy
-                    btnBuy.Interactable = false;
-                    BuyStartPackSuccess();
-                }
-            }
-            else
-            {
-                lockGroup.gameObject.SetActive(false);
-                NotificationPopup.instance.AddNotification("Buy Fail!");
-            }
-        });
+        // PurchaserManager.instance.BuyConsumable(Config.IAP_ID.tilematch_starter_pack, (string _iapID, PurchaserManager.IAP_CALLBACK_STATE _state) =>
+        // {
+        //     if (_state == PurchaserManager.IAP_CALLBACK_STATE.SUCCESS)
+        //     {
+        //         lockGroup.gameObject.SetActive(false);
+        //         if (_iapID.Equals(Config.IAP_ID.tilematch_starter_pack.ToString()))
+        //         {
+        //             //Buy
+        //             btnBuy.Interactable = false;
+        //             BuyStartPackSuccess();
+        //         }
+        //     }
+        //     else
+        //     {
+        //         lockGroup.gameObject.SetActive(false);
+        //         NotificationPopup.instance.AddNotification("Buy Fail!");
+        //     }
+        // });
     }
 
     public void BuyStartPackSuccess() {

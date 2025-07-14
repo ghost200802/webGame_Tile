@@ -51,25 +51,25 @@ public class WinPopup : MonoBehaviour
         //        return;
         //#endif
 
-        PurchaserManager.instance.BuyConsumable(configPackData.idPack, (string _iapID, PurchaserManager.IAP_CALLBACK_STATE _state) =>
-        {
-            if (_state == PurchaserManager.IAP_CALLBACK_STATE.SUCCESS)
-            {
-                lockGroup.gameObject.SetActive(false);
-                if (_iapID.Equals(Config.IAP_ID.removead.ToString()))
-                {
-                    Config.SetRemoveAd();
-                    NotificationPopup.instance.AddNotification("RemoveAd Success!");
-
-                    itemShopRemoveAd.SetActive(false);
-                }
-            }
-            else
-            {
-                lockGroup.gameObject.SetActive(false);
-                NotificationPopup.instance.AddNotification("Buy Fail!");
-            }
-        });
+        // PurchaserManager.instance.BuyConsumable(configPackData.idPack, (string _iapID, PurchaserManager.IAP_CALLBACK_STATE _state) =>
+        // {
+        //     if (_state == PurchaserManager.IAP_CALLBACK_STATE.SUCCESS)
+        //     {
+        //         lockGroup.gameObject.SetActive(false);
+        //         if (_iapID.Equals(Config.IAP_ID.removead.ToString()))
+        //         {
+        //             Config.SetRemoveAd();
+        //             NotificationPopup.instance.AddNotification("RemoveAd Success!");
+        //
+        //             itemShopRemoveAd.SetActive(false);
+        //         }
+        //     }
+        //     else
+        //     {
+        //         lockGroup.gameObject.SetActive(false);
+        //         NotificationPopup.instance.AddNotification("Buy Fail!");
+        //     }
+        // });
     }
 
     public void TouchHome()

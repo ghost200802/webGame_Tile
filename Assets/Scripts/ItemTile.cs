@@ -120,7 +120,9 @@ public class ItemTile : MonoBehaviour
 
     public void SetTouch_Enable()
     {
-        StartCoroutine(SetTouch_Avaiable_IEnumerator());
+        SetTouch_Avaiable(true);
+        SetShadow_Avaiable(false);
+        //StartCoroutine(SetTouch_Avaiable_IEnumerator());
     }
 
     public IEnumerator SetTouch_Avaiable_IEnumerator() {

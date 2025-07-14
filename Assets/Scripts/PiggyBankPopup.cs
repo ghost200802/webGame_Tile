@@ -60,20 +60,20 @@ public class PiggyBankPopup : MonoBehaviour
         //WatchAds
         //BuyPiggyBankCoin_Success();
         lockGroup.gameObject.SetActive(true);
-        PurchaserManager.instance.BuyConsumable(Config.IAP_ID.piggy_bank, (string _iapID, PurchaserManager.IAP_CALLBACK_STATE _state) =>
-        {
-            if (_state == PurchaserManager.IAP_CALLBACK_STATE.SUCCESS)
-            {
-                lockGroup.gameObject.SetActive(false);
-                if (_iapID.Equals(Config.IAP_ID.piggy_bank.ToString())) {
-                    BuyPiggyBankCoin_Success();
-                }
-            }
-            else {
-                lockGroup.gameObject.SetActive(false);
-                NotificationPopup.instance.AddNotification("Buy Fail!");
-            }
-        });
+        // PurchaserManager.instance.BuyConsumable(Config.IAP_ID.piggy_bank, (string _iapID, PurchaserManager.IAP_CALLBACK_STATE _state) =>
+        // {
+        //     if (_state == PurchaserManager.IAP_CALLBACK_STATE.SUCCESS)
+        //     {
+        //         lockGroup.gameObject.SetActive(false);
+        //         if (_iapID.Equals(Config.IAP_ID.piggy_bank.ToString())) {
+        //             BuyPiggyBankCoin_Success();
+        //         }
+        //     }
+        //     else {
+        //         lockGroup.gameObject.SetActive(false);
+        //         NotificationPopup.instance.AddNotification("Buy Fail!");
+        //     }
+        // });
     }
 
 
@@ -118,16 +118,16 @@ public class PiggyBankPopup : MonoBehaviour
 
     public void InitIAP()
     {
-        if (PurchaserManager.instance.IsInitialized())
-        {
-            txtPrice.text = PurchaserManager.instance.GetLocalizedPriceString(Config.IAP_ID.piggy_bank.ToString());
-            btnBuy.Interactable = true;
-        }
-        else
-        {
-            txtPrice.text = "0.01$";
-            btnBuy.Interactable = false;
-        }
+        // if (PurchaserManager.instance.IsInitialized())
+        // {
+        //     txtPrice.text = PurchaserManager.instance.GetLocalizedPriceString(Config.IAP_ID.piggy_bank.ToString());
+        //     btnBuy.Interactable = true;
+        // }
+        // else
+        // {
+        //     txtPrice.text = "0.01$";
+        //     btnBuy.Interactable = false;
+        // }
     }
 
     public void InitView_ShowView()

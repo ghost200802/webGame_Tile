@@ -233,22 +233,22 @@ public class Advertisements : MonoBehaviour
     /// </summary>
     public void Initialize()
     {
-        if (initialized == false)
-        {
-            initialized = true;
-#if UNITY_IOS
-#if USE_ATT
-            //App Tracking Transparency
-            var status = Unity.Advertisement.IosSupport.ATTrackingStatusBinding.GetAuthorizationTrackingStatus();
-
-            if (status == Unity.Advertisement.IosSupport.ATTrackingStatusBinding.AuthorizationTrackingStatus.NOT_DETERMINED)
-            {
-                Unity.Advertisement.IosSupport.ATTrackingStatusBinding.RequestAuthorizationTracking();
-            }
-#endif
-#endif
-            StartCoroutine(WaitForConsent(ContinueInitialization));
-        }
+//         if (initialized == false)
+//         {
+//             initialized = true;
+// #if UNITY_IOS
+// #if USE_ATT
+//             //App Tracking Transparency
+//             var status = Unity.Advertisement.IosSupport.ATTrackingStatusBinding.GetAuthorizationTrackingStatus();
+//
+//             if (status == Unity.Advertisement.IosSupport.ATTrackingStatusBinding.AuthorizationTrackingStatus.NOT_DETERMINED)
+//             {
+//                 Unity.Advertisement.IosSupport.ATTrackingStatusBinding.RequestAuthorizationTracking();
+//             }
+// #endif
+// #endif
+//             StartCoroutine(WaitForConsent(ContinueInitialization));
+//         }
     }
 
     private IEnumerator WaitForConsent(UnityAction Continue)

@@ -22,15 +22,15 @@ public class WinPopup2 : MonoBehaviour
     [Header("Popup Reward")]
     public BBUIView popupReward;
 
-    public Slider sliderReward;
+    // public Slider sliderReward;
     private int xReward = 2;
     
     
-    public BBUIButton btnClaim;
-    public Text txtClaimCoin;
+    // public BBUIButton btnClaim;
+    // public Text txtClaimCoin;
     
-    public BBUIButton btnClaimxReward;
-    public Text txtClaimxRewardCoin;
+    // public BBUIButton btnClaimxReward;
+    // public Text txtClaimxRewardCoin;
     
     [Header("Popup Action")]
     public BBUIView popupAction;
@@ -54,8 +54,8 @@ public class WinPopup2 : MonoBehaviour
         //popupAction.HideBehavior.onCallback_Completed.AddListener(PopupAction_HideView_Finished);
         
         //btnClaim.OnPointerClickCallBack_Completed.AddListener(TouchClaim);
-        btnClaimxReward.OnPointerClickCallBack_Completed.AddListener(TouchClaimxReward);
-        btnClaimxReward.OnPointerClickCallBack_Start.AddListener(TouchClaimxReward_Start);
+        // btnClaimxReward.OnPointerClickCallBack_Completed.AddListener(TouchClaimxReward);
+        // btnClaimxReward.OnPointerClickCallBack_Start.AddListener(TouchClaimxReward_Start);
         
         btnNextLevel.OnPointerClickCallBack_Completed.AddListener(TouchNextLevel);
         btnHome.OnPointerClickCallBack_Completed.AddListener(TouchHome);
@@ -71,9 +71,9 @@ public class WinPopup2 : MonoBehaviour
         popupAction.ShowBehavior.onCallback_Completed.RemoveAllListeners();
         popupAction.HideBehavior.onCallback_Completed.RemoveAllListeners();
         
-        btnClaim.OnPointerClickCallBack_Completed.RemoveAllListeners();
-        btnClaimxReward.OnPointerClickCallBack_Completed.RemoveAllListeners();
-        btnClaimxReward.OnPointerClickCallBack_Start.RemoveAllListeners();
+        // btnClaim.OnPointerClickCallBack_Completed.RemoveAllListeners();
+        // btnClaimxReward.OnPointerClickCallBack_Completed.RemoveAllListeners();
+        // btnClaimxReward.OnPointerClickCallBack_Start.RemoveAllListeners();
         
         btnNextLevel.OnPointerClickCallBack_Completed.RemoveAllListeners();
         btnHome.OnPointerClickCallBack_Completed.RemoveAllListeners();
@@ -123,8 +123,8 @@ public class WinPopup2 : MonoBehaviour
         Config.SetLevelStar(_level, _countStar);
         Config.SetChestCountStar(Config.GetChestCountStar() + addStar);
         
-        txtClaimCoin.text = $"+{coinValue}";
-        txtClaimxRewardCoin.text = $"+{coinValue * xReward}";
+        // txtClaimCoin.text = $"+{coinValue}";
+        // txtClaimxRewardCoin.text = $"+{coinValue * xReward}";
         
         ShowViews();
     }
@@ -134,8 +134,8 @@ public class WinPopup2 : MonoBehaviour
         gameObject.SetActive(true);
         lockGroup.SetActive(true);
         popupReward.gameObject.SetActive(false);
-        btnClaim.gameObject.SetActive(false);
-        btnClaimxReward.gameObject.SetActive(false);
+        // btnClaim.gameObject.SetActive(false);
+        // btnClaimxReward.gameObject.SetActive(false);
         popupAction.gameObject.SetActive(false);
         btnNextLevel.gameObject.SetActive(false);
         btnHome.gameObject.SetActive(false);
@@ -145,7 +145,7 @@ public class WinPopup2 : MonoBehaviour
             listStars[i].gameObject.SetActive(false);
         }
 
-        sliderReward.value = 0f;
+        // sliderReward.value = 0f;
         StartCoroutine(ShowViews_IEnumerator());
     }
 
@@ -181,10 +181,10 @@ public class WinPopup2 : MonoBehaviour
         }
         
         yield return new WaitForSeconds(0.1f);
-        btnClaimxReward.gameObject.SetActive(true);
-        btnClaimxReward.GetComponent<BBUIView>().ShowView();
+        // btnClaimxReward.gameObject.SetActive(true);
+        // btnClaimxReward.GetComponent<BBUIView>().ShowView();
 
-        InitSlider_Reward();
+        // InitSlider_Reward();
         lockGroup.SetActive(false);
         
         //yield return new WaitForSeconds(0.3f);
@@ -201,52 +201,6 @@ public class WinPopup2 : MonoBehaviour
         btnHome.gameObject.SetActive(true);
         btnHome.GetComponent<BBUIView>().ShowView();
     }
-
-    #region SLIDER REWARD
-
-    private void InitSlider_Reward()
-    {
-        sliderReward.DOValue(1f, 1f).SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo).OnUpdate(() =>
-            {
-                Slider_UpdateValue();
-            });
-    }
-
-    private void Slider_UpdateValue()
-    {
-        if (sliderReward.value < 0.114f)
-        {
-            xReward = 2;
-        }
-        else if (sliderReward.value < 0.24f)
-        {
-            xReward = 3;
-        }
-        else if (sliderReward.value < 0.4f)
-        {
-            xReward = 4;
-        }
-        else if (sliderReward.value < 0.6f)
-        {
-            xReward = 5;
-        }
-        else if (sliderReward.value < 0.76f)
-        {
-            xReward = 4;
-        }
-        else if (sliderReward.value < 0.886f)
-        {
-            xReward = 3;
-        }
-        else
-        {
-            xReward = 2;
-        }
-        
-        txtClaimxRewardCoin.text = $"+{coinValue * xReward}";
-    }
-
-    #endregion
 
 
     private void PopupReward_ShowView_Finished()
@@ -271,19 +225,16 @@ public class WinPopup2 : MonoBehaviour
     {
         lockGroup.SetActive(true);
         Config.SetCoin(Config.currCoin + coinValue);
-        DOTween.Kill(sliderReward);
         StartCoroutine(Claim_Finished());
     }
 
     private void TouchClaimxReward_Start()
     {
         lockGroup.SetActive(true);
-        DOTween.Kill(sliderReward);
     }
     private void TouchClaimxReward()
     {
         lockGroup.SetActive(true);
-        DOTween.Kill(sliderReward);
         if (Advertisements.Instance.IsRewardVideoAvailable())
         {
 
@@ -322,7 +273,7 @@ public class WinPopup2 : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         //popupReward.HideView();
         lockGroup.SetActive(false);
-        btnClaimxReward.gameObject.SetActive(false);
+        // btnClaimxReward.gameObject.SetActive(false);
     }
 
     private IEnumerator OpenPopup_Action()

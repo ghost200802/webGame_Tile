@@ -29,7 +29,7 @@ public class ShopPopup2 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        PurchaserManager.InitializeSucceeded += PurchaserManager_InitializeSucceeded;
+        // PurchaserManager.InitializeSucceeded += PurchaserManager_InitializeSucceeded;
         popup.ShowBehavior.onCallback_Completed.AddListener(ShowView_Finished);
         popup.HideBehavior.onCallback_Completed.AddListener(HideView_Finished);
         
@@ -41,7 +41,7 @@ public class ShopPopup2 : MonoBehaviour
 
     private void OnDestroy()
     {
-        PurchaserManager.InitializeSucceeded -= PurchaserManager_InitializeSucceeded;
+        // PurchaserManager.InitializeSucceeded -= PurchaserManager_InitializeSucceeded;
         popup.ShowBehavior.onCallback_Completed.RemoveAllListeners();
         popup.HideBehavior.onCallback_Completed.RemoveAllListeners();
         
@@ -166,34 +166,34 @@ public class ShopPopup2 : MonoBehaviour
         Debug.Log("TouchBuy_ShopItem"+configPackData.idPack.ToString());
         lockGroup.gameObject.SetActive(true);
 
-        PurchaserManager.instance.BuyConsumable(configPackData.idPack, (string _iapID, PurchaserManager.IAP_CALLBACK_STATE _state) =>
-        {
-            if (_state == PurchaserManager.IAP_CALLBACK_STATE.SUCCESS)
-            {
-                
-                Debug.Log("SUCCESSSUCCESS "+_iapID);
-                
-                lockGroup.gameObject.SetActive(false);
-                if (_iapID.Equals(Config.IAP_ID.removead.ToString()))
-                {
-                    Config.SetRemoveAd();
-                    Config.SetBuyIAP(configPackData.idPack);
-                    NotificationPopup.instance.AddNotification("RemoveAd Success!");
-
-                    InitIAP_RemoveAd();
-                }
-                else
-                {
-                    BuyPackSuccess(configPackData);
-                }
-            }
-            else
-            {
-                Debug.Log("Buy Fail!Buy Fail!Buy Fail!Buy Fail!Buy Fail!");
-                lockGroup.gameObject.SetActive(false);
-                NotificationPopup.instance.AddNotification("Buy Fail!");
-            }
-        });
+        // PurchaserManager.instance.BuyConsumable(configPackData.idPack, (string _iapID, PurchaserManager.IAP_CALLBACK_STATE _state) =>
+        // {
+        //     if (_state == PurchaserManager.IAP_CALLBACK_STATE.SUCCESS)
+        //     {
+        //         
+        //         Debug.Log("SUCCESSSUCCESS "+_iapID);
+        //         
+        //         lockGroup.gameObject.SetActive(false);
+        //         if (_iapID.Equals(Config.IAP_ID.removead.ToString()))
+        //         {
+        //             Config.SetRemoveAd();
+        //             Config.SetBuyIAP(configPackData.idPack);
+        //             NotificationPopup.instance.AddNotification("RemoveAd Success!");
+        //
+        //             InitIAP_RemoveAd();
+        //         }
+        //         else
+        //         {
+        //             BuyPackSuccess(configPackData);
+        //         }
+        //     }
+        //     else
+        //     {
+        //         Debug.Log("Buy Fail!Buy Fail!Buy Fail!Buy Fail!Buy Fail!");
+        //         lockGroup.gameObject.SetActive(false);
+        //         NotificationPopup.instance.AddNotification("Buy Fail!");
+        //     }
+        // });
 
 
     }

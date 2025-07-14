@@ -16,12 +16,12 @@ public class MenuManager : MonoBehaviour
     public static MenuManager instance;
     [Header("Canvas")]
     public CanvasScaler canvasScaler;
-    public BBUIButton btnSetting, btnGift, btnShop, btnSpin;
+    public BBUIButton btnSetting;//, btnGift, btnShop, btnSpin;
     public BBUIButton btnPlay, btnParty;
-    public BBUIButton btnLevel;
+    // public BBUIButton btnLevel;
     public Text txtLevel;
     public Menu_CoinGroup coinGroup;
-    public BBUIButton btnRemoveAd, btnChest;
+    // public BBUIButton btnRemoveAd, btnChest;
     public Image logo;
     public GameObject lockGroup;
     private void Awake()
@@ -41,11 +41,11 @@ public class MenuManager : MonoBehaviour
 
         btnSetting.OnPointerClickCallBack_Completed.AddListener(TouchSetting);
         //btnGift.OnPointerClickCallBack_Completed.AddListener(TouchGift);
-        btnShop.OnPointerClickCallBack_Completed.AddListener(TouchShop);
+        // btnShop.OnPointerClickCallBack_Completed.AddListener(TouchShop);
         btnPlay.OnPointerClickCallBack_Completed.AddListener(TouchPlay);
         btnParty.OnPointerClickCallBack_Completed.AddListener(TouchParty);
-        btnLevel.OnPointerClickCallBack_Completed.AddListener(TouchLevel);
-        btnSpin.OnPointerClickCallBack_Completed.AddListener(TouchSpin);
+        // btnLevel.OnPointerClickCallBack_Completed.AddListener(TouchLevel);
+        // btnSpin.OnPointerClickCallBack_Completed.AddListener(TouchSpin);
 
         txtLevel.text = $"Level: {Config.currLevel}";
         InitViews();
@@ -76,25 +76,24 @@ public class MenuManager : MonoBehaviour
     
     public void SetBuyStarterPackSuccess()
     {
-        btnRemoveAd.gameObject.SetActive(!Config.GetRemoveAd());
-        btnGift.gameObject.SetActive(!Config.GetBuyIAP(Config.IAP_ID.tilematch_starter_pack));
+        // btnRemoveAd.gameObject.SetActive(!Config.GetRemoveAd());
+        // btnGift.gameObject.SetActive(!Config.GetBuyIAP(Config.IAP_ID.tilematch_starter_pack));
     }
 
 
     public void TouchShop()
     {
-        shopPopup.OpenPopup();
+        // shopPopup.OpenPopup();
     }
 
 
     public void TouchSpin()
     {
-        spinPopup.OpenSpinPopup();
+        // spinPopup.OpenSpinPopup();
     }
 
     public void OpenShopCoin() {
-        shopPopup.OpenPopup();
-        
+        // shopPopup.OpenPopup();
     }
 
     public void CloseShopSucces()
@@ -127,14 +126,14 @@ public class MenuManager : MonoBehaviour
         lockGroup.gameObject.SetActive(false);
         btnSetting.gameObject.SetActive(false);
         //btnGift.gameObject.SetActive(false);
-        btnShop.gameObject.SetActive(false);
+        // btnShop.gameObject.SetActive(false);
         coinGroup.gameObject.SetActive(false);
         btnPlay.gameObject.SetActive(false);
         btnParty.gameObject.SetActive(false);
-        btnLevel.gameObject.SetActive(false);
-        btnChest.gameObject.SetActive(false);
-        btnSpin.gameObject.SetActive(false);
-        btnRemoveAd.gameObject.SetActive(false);
+        // btnLevel.gameObject.SetActive(false);
+        // btnChest.gameObject.SetActive(false);
+        // btnSpin.gameObject.SetActive(false);
+        // btnRemoveAd.gameObject.SetActive(false);
         logo.gameObject.SetActive(false);
 
 
@@ -164,19 +163,19 @@ public class MenuManager : MonoBehaviour
 
         sequenceShowView.InsertCallback(0.3f, () =>
         {
-            btnShop.gameObject.SetActive(true);
-            btnShop.GetComponent<BBUIView>().ShowView();
-
-            btnChest.gameObject.SetActive(true);
-            btnChest.GetComponent<BBUIView>().ShowView();
-
-            btnSpin.gameObject.SetActive(true);
-            btnSpin.GetComponent<BBUIView>().ShowView();
+            // btnShop.gameObject.SetActive(true);
+            // btnShop.GetComponent<BBUIView>().ShowView();
+            //
+            // btnChest.gameObject.SetActive(true);
+            // btnChest.GetComponent<BBUIView>().ShowView();
+            //
+            // btnSpin.gameObject.SetActive(true);
+            // btnSpin.GetComponent<BBUIView>().ShowView();
         });
         
         sequenceShowView.InsertCallback(1f, () =>
         {
-            btnChest.GetComponent<StarChestButton>().SetAnimation();
+            // btnChest.GetComponent<StarChestButton>().SetAnimation();
         });
 
         sequenceShowView.InsertCallback(0.4f, () =>
@@ -191,7 +190,7 @@ public class MenuManager : MonoBehaviour
             if (!Config.GetRemoveAd())
             {
                // btnRemoveAd.gameObject.SetActive(true);
-                btnRemoveAd.GetComponent<BBUIView>().ShowView();
+                // btnRemoveAd.GetComponent<BBUIView>().ShowView();
             }
         });
 
@@ -204,8 +203,8 @@ public class MenuManager : MonoBehaviour
 
         sequenceShowView.InsertCallback(0.5f, () =>
         {
-            btnLevel.gameObject.SetActive(true);
-            btnLevel.GetComponent<BBUIView>().ShowView();
+            // btnLevel.gameObject.SetActive(true);
+            // btnLevel.GetComponent<BBUIView>().ShowView();
         });
 
         sequenceShowView.InsertCallback(0.75f, () =>
@@ -246,7 +245,7 @@ public class MenuManager : MonoBehaviour
         //    btnGift.GetComponent<BBUIView>().HideView();
         //    btnShop.GetComponent<BBUIView>().HideView();
         //    coinGroup.GetComponent<BBUIView>().HideView();
-        //    btnPlay.GetComponent<BBUIView>().HideView();
+        // btnPlay.GetComponent<BBUIView>().HideView();
         //    btnParty.GetComponent<BBUIView>().HideView();
         //    btnLevel.GetComponent<BBUIView>().HideView();
         //    logo.GetComponent<BBUIView>().HideView();
@@ -260,10 +259,10 @@ public class MenuManager : MonoBehaviour
     }
 
     [Header("SHOP")]
-    public ShopPopup2 shopPopup;
+    // public ShopPopup2 shopPopup;
 
     [Header("SPIN")]
-    public SpinPopup spinPopup;
+    // public SpinPopup spinPopup;
 
     //[Header("STARTPACK")]
     //public StartPackPopup startPackPopup;

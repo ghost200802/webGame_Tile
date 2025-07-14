@@ -49,14 +49,14 @@ public class ItemShopIAP : MonoBehaviour
 
 
     public void InitIAP() {
-        if (PurchaserManager.instance.IsInitialized())
-        {
-            txtPrice.text = PurchaserManager.instance.GetLocalizedPriceString(configPackData.idPack.ToString());
-            btnBuy.Interactable = true;
-        }
-        else {
-            txtPrice.text = "0.01$";
-            btnBuy.Interactable = false;
-        }
+        // if (PurchaserManager.instance.IsInitialized())
+        // {
+        //     txtPrice.text = PurchaserManager.instance.GetLocalizedPriceString(configPackData.idPack.ToString());
+        //     btnBuy.Interactable = true;
+        // }
+        // else {
+        //     txtPrice.text = "0.01$";
+        //     btnBuy.Interactable = false;
+        // }
     }
 }

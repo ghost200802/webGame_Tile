@@ -379,21 +379,19 @@ public class Config
     public const int MAX_LEVEL = 1000;
     public static bool isSelectLevel = false;
     public static int currSelectLevel = 1;
-    public const string CURR_LEVEL = "CURR_LEVEL";
+    public const string CURR_LEVEL = "Tile_Level";
 
     public static int currLevel = 1;
 
     public static void SetCurrLevel(int _currLevel) {
-        if (_currLevel > currLevel)
-        {
-            currLevel = _currLevel;
-            PlayerPrefs.SetInt(CURR_LEVEL, _currLevel);
-            PlayerPrefs.Save();
-        }
+        currLevel = _currLevel;
+        PlayerPrefs.SetInt(CURR_LEVEL, _currLevel);
+        PlayerPrefs.Save();
     }
 
-    public static void GetCurrLevel() {
+    public static int GetCurrLevel() {
         currLevel = PlayerPrefs.GetInt(CURR_LEVEL, 1);
+        return currLevel;
     }
     #endregion
 

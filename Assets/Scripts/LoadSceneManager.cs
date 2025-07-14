@@ -7,6 +7,8 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UomaWeb;
+
 public class LoadSceneManager : MonoBehaviour
 {
     public static LoadSceneManager instance;
@@ -28,9 +30,16 @@ public class LoadSceneManager : MonoBehaviour
         {
             MusicManager.instance.PlayMusicBG();
         }
+
+        StartCoroutine(UomaController.Instance.GetCompleteLevel((int result) =>
+        {
+            Config.SetCurrLevel(result);
+            StartCoroutine(LoadMenuScene_IEnumerator());
+        }));
+
         //TODO: Check Chest Star
          //Config.SetChestCountStar(15);
-        StartCoroutine(LoadMenuScene_IEnumerator());
+        
     }
 
     // Update is called once per frame

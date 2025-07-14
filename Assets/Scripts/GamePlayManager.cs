@@ -45,10 +45,10 @@ public class GamePlayManager : MonoBehaviour
     //public BBUIButton btnWatchVideo;
 
     [Header("Button RemoveAds")]
-    public BBUIButton btnRemoveAds;
+    // public BBUIButton btnRemoveAds;
 
     [Header("Button PigBank")]
-    public BBUIButton btnPigBank;
+    // public BBUIButton btnPigBank;
 
     [Header("Text Level")]
     public Text txtLevel;
@@ -86,7 +86,7 @@ public class GamePlayManager : MonoBehaviour
         btnSuggest.OnPointerClickCallBack_Completed.AddListener(TouchSuggest);
         btnShuffle.OnPointerClickCallBack_Completed.AddListener(TouchShuffle);
         //btnWatchVideo.OnPointerClickCallBack_Completed.AddListener(TouchWatchVideo);
-        btnPigBank.OnPointerClickCallBack_Completed.AddListener(TouchPiggyBank);
+        // btnPigBank.OnPointerClickCallBack_Completed.AddListener(TouchPiggyBank);
 
         //AudioManager.instance.Play("Bmg");
 
@@ -99,8 +99,8 @@ public class GamePlayManager : MonoBehaviour
             }
             else
             {
-                level = PlayerPrefs.GetInt(Config.CURR_LEVEL);
-                //level = Config.currLevel;
+                //TODO [Ghost]: Load Level
+                level = Config.GetCurrLevel();
             }
         }
 
@@ -163,9 +163,9 @@ public class GamePlayManager : MonoBehaviour
         btnShuffle.gameObject.SetActive(false);
         starGroup.gameObject.SetActive(false);
         //btnWatchVideo.gameObject.SetActive(false);
-        btnRemoveAds.gameObject.SetActive(false);
+        // btnRemoveAds.gameObject.SetActive(false);
         txtLevel.gameObject.SetActive(false);
-        btnPigBank.gameObject.SetActive(false);
+        // btnPigBank.gameObject.SetActive(false);
         bgFooter.gameObject.SetActive(false);
 
         
@@ -180,38 +180,42 @@ public class GamePlayManager : MonoBehaviour
         objShuffleBG.gameObject.SetActive(true);
 
 
-        if (level >= 2)
-        {
-            btnUndo.Interactable = true;
-            btnUndo.GetComponent<ButtonItemLockManager>().ShowButtonItem_Lock(false);
-        }
-        else {
-            btnUndo.Interactable = false;
-            btnUndo.GetComponent<ButtonItemLockManager>().ShowButtonItem_Lock(true);
-        }
-
-
-        if (level >= 3)
-        {
-            btnSuggest.Interactable = true;
-            btnSuggest.GetComponent<ButtonItemLockManager>().ShowButtonItem_Lock(false);
-        }
-        else
-        {
-            btnSuggest.Interactable = false;
-            btnSuggest.GetComponent<ButtonItemLockManager>().ShowButtonItem_Lock(true);
-        }
-
-        if (level >= 4)
-        {
-            btnShuffle.Interactable = true;
-            btnShuffle.GetComponent<ButtonItemLockManager>().ShowButtonItem_Lock(false);
-        }
-        else
-        {
-            btnShuffle.Interactable = false;
-            btnShuffle.GetComponent<ButtonItemLockManager>().ShowButtonItem_Lock(true);
-        }
+        btnUndo.Interactable = true;
+        btnUndo.GetComponent<ButtonItemLockManager>().ShowButtonItem_Lock(false);
+        btnSuggest.Interactable = true;
+        btnSuggest.GetComponent<ButtonItemLockManager>().ShowButtonItem_Lock(false);
+        btnShuffle.Interactable = true;
+        btnShuffle.GetComponent<ButtonItemLockManager>().ShowButtonItem_Lock(false);
+        
+        // if (level >= 2)
+        // {
+        //     
+        // }
+        // else {
+        //     btnUndo.Interactable = false;
+        //     btnUndo.GetComponent<ButtonItemLockManager>().ShowButtonItem_Lock(true);
+        // }
+        //
+        //
+        // if (level >= 3)
+        // {
+        //     
+        // }
+        // else
+        // {
+        //     btnSuggest.Interactable = false;
+        //     btnSuggest.GetComponent<ButtonItemLockManager>().ShowButtonItem_Lock(true);
+        // }
+        //
+        // if (level >= 4)
+        // {
+        //     
+        // }
+        // else
+        // {
+        //     btnShuffle.Interactable = false;
+        //     btnShuffle.GetComponent<ButtonItemLockManager>().ShowButtonItem_Lock(true);
+        // }
 
         SetUpdate_CountItem();
 
@@ -230,8 +234,8 @@ public class GamePlayManager : MonoBehaviour
             bgFooter.gameObject.SetActive(true);
             bgFooter.GetComponent<BBUIView>().ShowView();
 
-            btnPigBank.gameObject.SetActive(true);
-            btnPigBank.GetComponent<BBUIView>().ShowView();
+            // btnPigBank.gameObject.SetActive(true);
+            // btnPigBank.GetComponent<BBUIView>().ShowView();
 
             btnUndo.gameObject.SetActive(true);
             btnUndo.GetComponent<BBUIView>().ShowView();
@@ -257,8 +261,8 @@ public class GamePlayManager : MonoBehaviour
             //btnWatchVideo.gameObject.SetActive(true);
             //btnWatchVideo.GetComponent<BBUIView>().ShowView();
 
-            btnRemoveAds.gameObject.SetActive(true);
-            btnRemoveAds.GetComponent<BBUIView>().ShowView();
+            // btnRemoveAds.gameObject.SetActive(true);
+            // btnRemoveAds.GetComponent<BBUIView>().ShowView();
 
 
             btnShuffle.gameObject.SetActive(true);
@@ -278,33 +282,33 @@ public class GamePlayManager : MonoBehaviour
         Debug.Log("SetStartPlayingGameSetStartPlayingGame");
         Config.gameState = Config.GAME_STATE.PLAYING;
 
-        if (Config.CheckTutorial_1())
-        {
-            ShowTut1();
-        }
-
-        if (Config.CheckTutorial_2())
-        {
-            Debug.LogError("Chay vao day ne");
-            ShowTut2();
-        }
-        if (Config.CheckTutorial_3())
-        {
-            ShowTut3();
-        }
-        if (Config.CheckTutorial_4())
-        {
-            ShowTut4();
-        }
+        // if (Config.CheckTutorial_1())
+        // {
+        //     ShowTut1();
+        // }
+        //
+        // if (Config.CheckTutorial_2())
+        // {
+        //     Debug.LogError("Chay vao day ne");
+        //     ShowTut2();
+        // }
+        // if (Config.CheckTutorial_3())
+        // {
+        //     ShowTut3();
+        // }
+        // if (Config.CheckTutorial_4())
+        // {
+        //     ShowTut4();
+        // }
 
   //      Debug.Log("SetStartPlayingGame:"+level);
 //        Debug.Log("SetStartPlayingGame:"+ Config.GetTut_Finished(Config.TUT.TUT_TOUCHSPIN_LEVEL5));
-        if (level == 5 && !Config.GetTut_Finished(Config.TUT.TUT_TOUCHSPIN_LEVEL5) && Config.CheckSpinAvaiable())//
-        {
-            Config.SetTut_Finished(Config.TUT.TUT_TOUCHSPIN_LEVEL5);
-            //ShowTut_TouchSpin();
-            OpenSpinPopup();
-        }
+        // if (level == 5 && !Config.GetTut_Finished(Config.TUT.TUT_TOUCHSPIN_LEVEL5) && Config.CheckSpinAvaiable())//
+        // {
+        //     Config.SetTut_Finished(Config.TUT.TUT_TOUCHSPIN_LEVEL5);
+        //     //ShowTut_TouchSpin();
+        //     OpenSpinPopup();
+        // }
         
         lockGroup.SetActive(false);
 
@@ -495,9 +499,9 @@ public class GamePlayManager : MonoBehaviour
 
     private void SetFinishedGame() {
         btnPause.Interactable = false;
-        btnPigBank.Interactable = false;
+        // btnPigBank.Interactable = false;
         //btnWatchVideo.Interactable = false;
-        btnRemoveAds.Interactable = false;
+        // btnRemoveAds.Interactable = false;
         btnShuffle.Interactable = false;
         btnUndo.Interactable = false;
         btnSuggest.Interactable = false;
@@ -720,9 +724,9 @@ public class GamePlayManager : MonoBehaviour
 
 
         btnPause.Interactable = true;
-        btnPigBank.Interactable = true;
+        // btnPigBank.Interactable = true;
         //btnWatchVideo.Interactable = true;
-        btnRemoveAds.Interactable = true;
+        // btnRemoveAds.Interactable = true;
         btnShuffle.Interactable = true;
         btnUndo.Interactable = true;
         btnSuggest.Interactable = true;
