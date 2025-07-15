@@ -36,6 +36,8 @@ public class LosePopup2 : MonoBehaviour
     
     public GameObject lockGroup;
     
+    private bool isFirst = false;
+    
     
     enum REWARD_ACTION {
         REVIVE,
@@ -74,15 +76,8 @@ public class LosePopup2 : MonoBehaviour
     private bool isRevive;
     public void ShowLosePopup(int _level,bool _isRevive)
     {
-        
-        if(_level < 2)
-        {
-           // AdmobManager.instance.HideBannerAd();
-        }
-        else
-        {
-           // AdmobManager.instance.Request_Banner();
-        }
+
+        isFirst = true;
         SoundManager.instance.PlaySound_GameOver();
        
         level = _level;
@@ -241,6 +236,12 @@ public class LosePopup2 : MonoBehaviour
 
     private void TouchContinue_Coin()
     {
+        if (!isFirst)
+        {
+            return;
+        }
+        isFirst = false;
+        
         StartCoroutine(UomaController.Instance.BuyGameItem("continue", 1, (resultBuy) =>
         {
             if (resultBuy.successCode == 0)

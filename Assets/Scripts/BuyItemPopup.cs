@@ -17,6 +17,8 @@ public class BuyItemPopup : MonoBehaviour
     public Sprite sprite_Undo;
     public Sprite sprite_Suggest;
     public Sprite sprite_Shuffle;
+    
+    private bool isFirst = false;
 
     private string ItemName;
 
@@ -48,6 +50,7 @@ public class BuyItemPopup : MonoBehaviour
         configItemShop.countItem = 1;
         configItemShop.price = Config.COIN_PRICE_ITEM;
 
+        isFirst = true;
         ShowRewardItem();
         gameObject.SetActive(true);
         InitViews();
@@ -90,6 +93,12 @@ public class BuyItemPopup : MonoBehaviour
     }
     public void TouchBuyItem()
     {
+        if (!isFirst)
+        {
+            return;
+        }
+        isFirst = false;
+        
         StartCoroutine(UomaController.Instance.BuyGameItem(this.ItemName, 3, (resultBuy) =>
         {
             if (resultBuy.successCode == 0)
