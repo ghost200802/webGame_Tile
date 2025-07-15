@@ -11,6 +11,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Sirenix.OdinInspector;
+using UomaWeb;
+
 public class MenuManager : MonoBehaviour
 {
     public static MenuManager instance;
@@ -47,7 +49,7 @@ public class MenuManager : MonoBehaviour
         // btnLevel.OnPointerClickCallBack_Completed.AddListener(TouchLevel);
         // btnSpin.OnPointerClickCallBack_Completed.AddListener(TouchSpin);
 
-        txtLevel.text = $"Level: {Config.currLevel}";
+        txtLevel.text = $"Level: {UomaDataManager.CurrLevel}";
         InitViews();
 
         // if (Config.isShowStarterPack)
@@ -140,7 +142,7 @@ public class MenuManager : MonoBehaviour
 
         InitViews_ShowView();
 
-        if(Config.currLevel > 1)
+        if(UomaDataManager.CurrLevel > 1)
         {
            // startPackPopup.ShowStartPack();
         }
@@ -153,8 +155,8 @@ public class MenuManager : MonoBehaviour
         sequenceShowView.InsertCallback(0.1f, () =>
         {
             SoundManager.instance.PlaySound_ShowView();
-            btnSetting.gameObject.SetActive(true);
-            btnSetting.GetComponent<BBUIView>().ShowView();
+            btnSetting.gameObject.SetActive(false);
+            //btnSetting.GetComponent<BBUIView>().ShowView();
 
             coinGroup.gameObject.SetActive(true);
             coinGroup.GetComponent<BBUIView>().ShowView();

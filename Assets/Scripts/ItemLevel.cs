@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UomaWeb;
+
 public class ItemLevel : MonoBehaviour
 {
     public Text txtLevel;
@@ -41,7 +43,7 @@ public class ItemLevel : MonoBehaviour
     }
 
     public void ShowInfoLevel() {
-        if (infoLevel.level < Config.currLevel)
+        if (infoLevel.level < UomaDataManager.CurrLevel)
         {
             //Da mo khoa
             btnLevel.Interactable = true;
@@ -60,7 +62,7 @@ public class ItemLevel : MonoBehaviour
                 listStars[i].sprite = spriteStar_On;
             }
         }
-        else if (infoLevel.level == Config.currLevel)
+        else if (infoLevel.level == UomaDataManager.CurrLevel)
         {
             //CurrLevel
             btnLevel.Interactable = true;

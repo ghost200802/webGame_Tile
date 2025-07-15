@@ -23,7 +23,6 @@ public class LoadSceneManager : MonoBehaviour
         Config.GetSound();
         Config.GetMusic();
         Config.currCoin = Config.GetCoin();
-        Config.GetCurrLevel();
         Config.currPiggyBankCoin = Config.GetPiggyBank();
         Config.GetLevelStar();
         if (Config.isMusic)
@@ -31,12 +30,15 @@ public class LoadSceneManager : MonoBehaviour
             MusicManager.instance.PlayMusicBG();
         }
 
-        StartCoroutine(UomaController.Instance.GetCompleteLevel((int result) =>
+        StartCoroutine(UomaController.Instance.GetVirtualCurrency((int currency) =>
         {
-            Config.SetCurrLevel(result);
-            StartCoroutine(LoadMenuScene_IEnumerator());
+            StartCoroutine(UomaController.Instance.GetCompleteLevel((int result) =>
+            {
+                StartCoroutine(LoadMenuScene_IEnumerator());
+            }));
         }));
-
+        
+        
         //TODO: Check Chest Star
          //Config.SetChestCountStar(15);
         
@@ -57,7 +59,7 @@ public class LoadSceneManager : MonoBehaviour
         if (!isLoadMenu)
         {
             //isLoadMenu = true;
-            if (Config.currLevel == 1)
+            if (UomaDataManager.CurrLevel == 1)
             {
                 SceneManager.LoadSceneAsync("Play");
 

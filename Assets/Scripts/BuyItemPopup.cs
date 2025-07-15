@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using UomaWeb;
+
 public class BuyItemPopup : MonoBehaviour
 {
     public static BuyItemPopup instance;
@@ -11,10 +13,14 @@ public class BuyItemPopup : MonoBehaviour
     public GameObject popup;
     public GameObject lockGroup;
     public Image icon;
-    public Text txtCount, txtDes;
+    public Text txtCount,txtPrice,txtDes;
     public Sprite sprite_Undo;
     public Sprite sprite_Suggest;
     public Sprite sprite_Shuffle;
+
+    private string ItemName;
+
+    private const int BuyItemCount = 3;
     private void Awake()
     {
         instance = this;
@@ -49,6 +55,14 @@ public class BuyItemPopup : MonoBehaviour
 
     private void ShowRewardItem()
     {
+        this.ItemName = configItemShop.shopItemType switch
+        {
+            Config.SHOPITEM.SUGGEST => "suggest",
+            Config.SHOPITEM.SHUFFLE => "shuffle",
+            Config.SHOPITEM.UNDO => "undo",
+            _ => string.Empty
+        };
+        
         if (configItemShop.shopItemType == Config.SHOPITEM.UNDO)
         {
             icon.sprite = sprite_Undo;
@@ -65,7 +79,8 @@ public class BuyItemPopup : MonoBehaviour
             txtDes.text = "Tap to rearrange the order of tiles on the map";
         }
        // icon.SetNativeSize();
-        txtCount.text = $"x{configItemShop.countItem} ";
+        txtCount.text = $"x{BuyItemCount}";
+        txtPrice.text = $"{BuyItemCount * GameHelper.GetItemPrice(ItemName)}";
     }
     public void TouchClose()
     {
@@ -75,19 +90,27 @@ public class BuyItemPopup : MonoBehaviour
     }
     public void TouchBuyItem()
     {
-        if (Config.currCoin >= configItemShop.price)
+        StartCoroutine(UomaController.Instance.BuyGameItem(this.ItemName, 3, (resultBuy) =>
         {
-            Config.SetCoin(Config.currCoin - configItemShop.price);
-            Config.BuySucces_ItemShop(configItemShop);
-            GamePlayManager.instance.SetFreeItem_Success();
+            if (resultBuy.successCode == 0)
+            {
+                this.HidePopup_Finished();
+                GamePlayManager.instance.SetUpdate_CountItem();
+            }
+        }));
 
-            NotificationPopup.instance.AddNotification("Buy Success!");
-        }
-        else {
-            NotificationPopup.instance.AddNotification("Not enough Coin!");
-            GamePlayManager.instance.OpenShopPopup();
-        }
-
+        // if (Config.currCoin >= configItemShop.price)
+        // {
+        //     Config.SetCoin(Config.currCoin - configItemShop.price);
+        //     Config.BuySucces_ItemShop(configItemShop);
+        //     GamePlayManager.instance.SetFreeItem_Success();
+        //
+        //     NotificationPopup.instance.AddNotification("Buy Success!");
+        // }
+        // else {
+        //     NotificationPopup.instance.AddNotification("Not enough Coin!");
+        //     GamePlayManager.instance.OpenShopPopup();
+        // }
     }
     public void HidePopup_Finished()
     {

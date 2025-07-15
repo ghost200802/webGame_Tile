@@ -10,6 +10,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+using UnityEngine.UI;
+using UomaWeb;
+
 public class LosePopup2 : MonoBehaviour
 {
     public static LosePopup2 instance;
@@ -18,8 +21,10 @@ public class LosePopup2 : MonoBehaviour
     [Header("Popup Reward")]
     public BBUIView popupReward;
 
+    public Text continueCostTxt;
+    
     public RectTransform txtCleanAllBoxs;
-    public BBUIButton btnContinue_Video;
+    // public BBUIButton btnContinue_Video;
     public BBUIButton btnContinue_Coin;
     public BBUIButton btnNoThanks;
     
@@ -51,23 +56,17 @@ public class LosePopup2 : MonoBehaviour
         popupAction.ShowBehavior.onCallback_Completed.AddListener(PopupAction_ShowView_Finished);
         popupAction.HideBehavior.onCallback_Completed.AddListener(PopupAction_HideView_Finished);
         
-        btnContinue_Video.OnPointerClickCallBack_Completed.AddListener(TouchContinue_Video);
+        // btnContinue_Video.OnPointerClickCallBack_Completed.AddListener(TouchContinue_Video);
         btnContinue_Coin.OnPointerClickCallBack_Completed.AddListener(TouchContinue_Coin);
         btnNoThanks.OnPointerClickCallBack_Completed.AddListener(TouchNoThank);
         
         btnRestart.OnPointerClickCallBack_Completed.AddListener(TouchRestart);
         btnHome.OnPointerClickCallBack_Completed.AddListener(TouchHome);
 
+        continueCostTxt.text = $"{GameHelper.GetItemPrice("continue")}";
 
         Config.interstitialAd_countLose++;
-        Debug.LogError("COUNT LOSE = " + Config.interstitialAd_countLose);
-        if (Config.interstitialAd_countLose == 2)
-        {
-            Config.interstitialAd_countLose = 0;
-            Advertisements.Instance.ShowInterstitial();
-        }
-
-
+        Debug.Log("COUNT LOSE = " + Config.interstitialAd_countLose);
     }
 
 
@@ -92,9 +91,9 @@ public class LosePopup2 : MonoBehaviour
         gameObject.SetActive(true);
         lockGroup.SetActive(true);
         popupReward.gameObject.SetActive(false);
-        btnContinue_Video.gameObject.SetActive(false);
+        // btnContinue_Video.gameObject.SetActive(false);
         btnContinue_Coin.gameObject.SetActive(false);
-        btnNoThanks.gameObject.SetActive(false);
+        btnNoThanks.gameObject.SetActive(true);
         popupAction.gameObject.SetActive(false);
         btnRestart.gameObject.SetActive(false);
         btnHome.gameObject.SetActive(false);
@@ -126,8 +125,8 @@ public class LosePopup2 : MonoBehaviour
         if (Config.CheckDaily_FreeRevive())
         {
             yield return new WaitForSeconds(0.1f);
-            btnContinue_Video.gameObject.SetActive(true);
-            btnContinue_Video.GetComponent<BBUIView>().ShowView();
+            // btnContinue_Video.gameObject.SetActive(true);
+            // btnContinue_Video.GetComponent<BBUIView>().ShowView();
 
             // txtCleanAllBoxs.DOAnchorPosY(95f, 0.2f);
         }
@@ -242,20 +241,24 @@ public class LosePopup2 : MonoBehaviour
 
     private void TouchContinue_Coin()
     {
-        if (Config.currCoin >= Config.PRICE_COIN_REVIVE)
+        StartCoroutine(UomaController.Instance.BuyGameItem("continue", 1, (resultBuy) =>
         {
-            Config.SetCoin(Config.currCoin - Config.PRICE_COIN_REVIVE);
-            
-            rewardAction = REWARD_ACTION.REVIVE;
-            popupReward.HideView();
-            GameLevelManager.instance.Revive();
-            
-            GamePlayManager.instance.SetRevive_Success();
-        }
-        else
-        {
-            GamePlayManager.instance.OpenShopPopup();
-        }
+            if (resultBuy.successCode == 0)
+            {
+                StartCoroutine(UomaController.Instance.UseGameItem("continue", (resultUse) =>
+                {
+                    if (resultUse.successCode == 0)
+                    {
+
+                        rewardAction = REWARD_ACTION.REVIVE;
+                        popupReward.HideView();
+                        GameLevelManager.instance.Revive();
+
+                        GamePlayManager.instance.SetRevive_Success();
+                    }
+                }));
+            }
+        }));
     }
 
     private void TouchNoThank()

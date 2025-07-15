@@ -435,19 +435,7 @@ public class GameLevelManager : MonoBehaviour
     }
     public void SetGameWin()
     {
-        Config.interstitialAd_countWin++;
-        Debug.Log("COUNT WIN = " + Config.interstitialAd_countWin);
-        if (Config.interstitialAd_countWin == 3)
-        {
-            Config.interstitialAd_countWin = 0;
-            Advertisements.Instance.ShowInterstitial();
-        }
-            
-        //Debug.LogError("GAME WIN");
-        //PlayerPrefs.SetInt("CURREN_LEVEL", GamePlayManager.instance.level + 1);
-
         GamePlayManager.instance.SetGameWin();
-        
     }
 
     public bool CheckGameOver()

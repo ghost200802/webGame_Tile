@@ -11,6 +11,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
+using UomaWeb;
 
 public class GamePlayManager : MonoBehaviour
 {
@@ -100,7 +101,7 @@ public class GamePlayManager : MonoBehaviour
             else
             {
                 //TODO [Ghost]: Load Level
-                level = Config.GetCurrLevel();
+                level = UomaDataManager.CurrLevel;
             }
         }
 
@@ -170,13 +171,13 @@ public class GamePlayManager : MonoBehaviour
 
         
 
-        //txtUndoCount.text = $"{Config.GetCount_ItemHelp(Config.ITEMHELP_TYPE.UNDO)}";
+        txtUndoCount.text = $"{UomaDataManager.GetItemNum("undo")}";
         objUndoBG.gameObject.SetActive(true);
 
-        //txtSuggestCount.text = $"{Config.GetCount_ItemHelp(Config.ITEMHELP_TYPE.SUGGEST)}";
+        txtSuggestCount.text = $"{UomaDataManager.GetItemNum("suggest")}";
         objSuggestBG.gameObject.SetActive(true);
 
-        //txtShuffleCount.text = $"{Config.GetCount_ItemHelp(Config.ITEMHELP_TYPE.SHUFFLE)}";
+        txtShuffleCount.text = $"{UomaDataManager.GetItemNum("shuffle")}";
         objShuffleBG.gameObject.SetActive(true);
 
 
@@ -364,32 +365,25 @@ public class GamePlayManager : MonoBehaviour
         //Debug.LogError("Touch Undo");
         if (GameLevelManager.instance.CheckUndoAvaiable() && Config.GetCount_ItemHelp(Config.ITEMHELP_TYPE.UNDO) > 0)
         {
-            GameLevelManager.instance.SetUndo();
-            Config.SetCount_ItemHelp(Config.ITEMHELP_TYPE.UNDO, Config.GetCount_ItemHelp(Config.ITEMHELP_TYPE.UNDO) - 1);
-            //txtUndoCount.text = $"{Config.GetCount_ItemHelp(Config.ITEMHELP_TYPE.UNDO)}";
-            SetUpdate_CountItem();
-            objUndoBG.gameObject.SetActive(true);
-
-
-            if (Config.CheckTutorial_2() && Config.isShowTut2) {
-                HideTut2();
-            }
+            StartCoroutine(UomaController.Instance.UseGameItem("undo", (result) =>
+            {
+                if (result.successCode == 0)
+                {
+                    GameLevelManager.instance.SetUndo();
+                    Config.SetCount_ItemHelp(Config.ITEMHELP_TYPE.UNDO, Config.GetCount_ItemHelp(Config.ITEMHELP_TYPE.UNDO) - 1);
+                    //txtUndoCount.text = $"{Config.GetCount_ItemHelp(Config.ITEMHELP_TYPE.UNDO)}";
+                    SetUpdate_CountItem();
+                    objUndoBG.gameObject.SetActive(true);
+                    
+                }
+            }));
+            
+            
            // FirebaseManager.instance.LogUsePowerUp(FirebaseManager.POWERUP_UNDO, level);
         }
         else if (Config.GetCount_ItemHelp(Config.ITEMHELP_TYPE.UNDO) == 0) {
-            if (Config.currCoin >= Config.COIN_PRICE_ITEM)
-            {
-                OpenBuyItemPopup(Config.ITEMHELP_TYPE.UNDO);
-            }
-            else {
-                
-                OpenBuyItemPopup(Config.ITEMHELP_TYPE.UNDO);
-                // OpenFreeItemPopup(Config.ITEMHELP_TYPE.UNDO);
-            }
-            
+            OpenBuyItemPopup(Config.ITEMHELP_TYPE.UNDO);
         }
-
-        HideTut_HandGuide();
     }
     #endregion
 
@@ -399,29 +393,27 @@ public class GamePlayManager : MonoBehaviour
         //Debug.LogError("Touch Suggest");
         if (Config.GetCount_ItemHelp(Config.ITEMHELP_TYPE.SUGGEST) > 0)
         {
-            GameLevelManager.instance.SetSuggest();
-
-            if (Config.CheckTutorial_3() && Config.isShowTut3)
+            StartCoroutine(UomaController.Instance.UseGameItem("suggest", (result) =>
             {
-                HideTut3();
-            }
+                if (result.successCode == 0)
+                {
+                    GameLevelManager.instance.SetSuggest();
+                }
+            }));
+            
+
+            // if (Config.CheckTutorial_3() && Config.isShowTut3)
+            // {
+            //     HideTut3();
+            // }
             
             //FirebaseManager.instance.LogUsePowerUp(FirebaseManager.POWERUP_HINT, level);
         }
         else {
-            if (Config.currCoin >= Config.COIN_PRICE_ITEM)
-            {
-                OpenBuyItemPopup(Config.ITEMHELP_TYPE.SUGGEST);
-            }
-            else
-            {
-                OpenBuyItemPopup(Config.ITEMHELP_TYPE.SUGGEST);
-                // OpenFreeItemPopup(Config.ITEMHELP_TYPE.SUGGEST);
-            }
-            
+            OpenBuyItemPopup(Config.ITEMHELP_TYPE.SUGGEST);
         }
 
-        HideTut_HandGuide();
+        //HideTut_HandGuide();
 
     }
 
@@ -439,32 +431,23 @@ public class GamePlayManager : MonoBehaviour
        // Debug.LogError("Touch Shuffle");
         if (Config.GetCount_ItemHelp(Config.ITEMHELP_TYPE.SHUFFLE) > 0)
         {
-            GameLevelManager.instance.SetShuffle();
-            Config.SetCount_ItemHelp(Config.ITEMHELP_TYPE.SHUFFLE, Config.GetCount_ItemHelp(Config.ITEMHELP_TYPE.SHUFFLE) - 1);
-            //txtShuffleCount.text = $"{Config.GetCount_ItemHelp(Config.ITEMHELP_TYPE.SHUFFLE)}";
-            SetUpdate_CountItem();
-            objShuffleBG.gameObject.SetActive(true);
-
-            if (Config.CheckTutorial_4() && Config.isShowTut4)
+            StartCoroutine(UomaController.Instance.UseGameItem("shuffle", (result) =>
             {
-                HideTut4();
-            }
+                if (result.successCode == 0)
+                {
+                    GameLevelManager.instance.SetShuffle();
+                    Config.SetCount_ItemHelp(Config.ITEMHELP_TYPE.SHUFFLE, Config.GetCount_ItemHelp(Config.ITEMHELP_TYPE.SHUFFLE) - 1);
+                    //txtShuffleCount.text = $"{Config.GetCount_ItemHelp(Config.ITEMHELP_TYPE.SHUFFLE)}";
+                    SetUpdate_CountItem();
+                    objShuffleBG.gameObject.SetActive(true);
+                }
+            }));
 //            FirebaseManager.instance.LogUsePowerUp(FirebaseManager.POWERUP_SHUFFLE, level);
         }
         else
         {
-            
-            if (Config.currCoin >= Config.COIN_PRICE_ITEM)
-            {
-                OpenBuyItemPopup(Config.ITEMHELP_TYPE.SHUFFLE);
-            }
-            else
-            {
-                OpenBuyItemPopup(Config.ITEMHELP_TYPE.SHUFFLE);
-                // OpenFreeItemPopup(Config.ITEMHELP_TYPE.SHUFFLE);
-            }
+            OpenBuyItemPopup(Config.ITEMHELP_TYPE.SHUFFLE);
         }
-        HideTut_HandGuide();
     }
     #endregion
 
@@ -477,15 +460,15 @@ public class GamePlayManager : MonoBehaviour
             //FirebaseManager.instance.LogLevelWin(level);
             SetFinishedGame();
             Config.gameState = Config.GAME_STATE.WIN;
-            
-            winPopup.ShowWinPopup(level,starGroup.GetCurrStar(), GameLevelManager.instance.configLevelGame.listRewards_CoinValue[starGroup.GetCurrStar()]);
 
-            Config.SetCurrLevel(level + 1);
-            Config.currSelectLevel = Config.currLevel;
-
-            if (level >= 15 && level % 5 == 0 && !Config.GetRate()) {
-                OpenRatePopup();
-            }
+            StartCoroutine(UomaController.Instance.CompleteLevel(UomaDataManager.CurrLevel, starGroup.GetCurrStar(), (result) =>
+            {
+                if (result.successCode == 0)
+                {
+                    winPopup.ShowWinPopup(level, starGroup.GetCurrStar(), GameLevelManager.instance.configLevelGame.listRewards_CoinValue[starGroup.GetCurrStar()]);
+                    Config.currSelectLevel = UomaDataManager.CurrLevel;
+                }
+            }));
         }
     }
 
@@ -913,7 +896,7 @@ public class GamePlayManager : MonoBehaviour
     public IEnumerator OpenRatePopup_IEnumerator()
     {
         yield return new WaitForSeconds(0.5f);
-        ratePopup.OpenRatePopup();
+        //ratePopup.OpenRatePopup();
     }
     #endregion
 

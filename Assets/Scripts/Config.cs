@@ -10,6 +10,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UomaWeb;
 
 public class Config
 {
@@ -90,11 +91,15 @@ public class Config
 
     public static int GetCount_ItemHelp(ITEMHELP_TYPE itemHelpType) {
         if(itemHelpType == ITEMHELP_TYPE.UNDO)
-            return PlayerPrefs.GetInt(itemHelpType.ToString(), 3);
+            return UomaDataManager.GetItemNum("undo");
         if (itemHelpType == ITEMHELP_TYPE.SHUFFLE)
-            return PlayerPrefs.GetInt(itemHelpType.ToString(), 4);
+            return UomaDataManager.GetItemNum("shuffle");
+        if (itemHelpType == ITEMHELP_TYPE.SUGGEST)
+            return UomaDataManager.GetItemNum("suggest");
         else
-            return PlayerPrefs.GetInt(itemHelpType.ToString(), 4);
+        {
+            return 0;
+        }
     }
 
     #region COIN
@@ -123,21 +128,21 @@ public class Config
     }
 
     public static void BuySucces_ItemShop(ConfigItemShopData itemShopData) {
-        if (itemShopData.shopItemType == SHOPITEM.UNDO) {
-            SetCount_ItemHelp(ITEMHELP_TYPE.UNDO, GetCount_ItemHelp(ITEMHELP_TYPE.UNDO) + itemShopData.countItem);
-        }
-        else if (itemShopData.shopItemType == SHOPITEM.SHUFFLE)
-        {
-            SetCount_ItemHelp(ITEMHELP_TYPE.SHUFFLE, GetCount_ItemHelp(ITEMHELP_TYPE.SHUFFLE) + itemShopData.countItem);
-        }
-        else if (itemShopData.shopItemType == SHOPITEM.SUGGEST)
-        {
-            SetCount_ItemHelp(ITEMHELP_TYPE.SUGGEST, GetCount_ItemHelp(ITEMHELP_TYPE.SUGGEST) + itemShopData.countItem);
-        }
-        else if (itemShopData.shopItemType == SHOPITEM.COIN)
-        {
-            SetCoin(currCoin + itemShopData.countItem);
-        }
+        // if (itemShopData.shopItemType == SHOPITEM.UNDO) {
+        //     SetCount_ItemHelp(ITEMHELP_TYPE.UNDO, GetCount_ItemHelp(ITEMHELP_TYPE.UNDO) + itemShopData.countItem);
+        // }
+        // else if (itemShopData.shopItemType == SHOPITEM.SHUFFLE)
+        // {
+        //     SetCount_ItemHelp(ITEMHELP_TYPE.SHUFFLE, GetCount_ItemHelp(ITEMHELP_TYPE.SHUFFLE) + itemShopData.countItem);
+        // }
+        // else if (itemShopData.shopItemType == SHOPITEM.SUGGEST)
+        // {
+        //     SetCount_ItemHelp(ITEMHELP_TYPE.SUGGEST, GetCount_ItemHelp(ITEMHELP_TYPE.SUGGEST) + itemShopData.countItem);
+        // }
+        // else if (itemShopData.shopItemType == SHOPITEM.COIN)
+        // {
+        //     SetCoin(currCoin + itemShopData.countItem);
+        // }
     }
 
 
@@ -379,20 +384,9 @@ public class Config
     public const int MAX_LEVEL = 1000;
     public static bool isSelectLevel = false;
     public static int currSelectLevel = 1;
-    public const string CURR_LEVEL = "Tile_Level";
 
-    public static int currLevel = 1;
-
-    public static void SetCurrLevel(int _currLevel) {
-        currLevel = _currLevel;
-        PlayerPrefs.SetInt(CURR_LEVEL, _currLevel);
-        PlayerPrefs.Save();
-    }
-
-    public static int GetCurrLevel() {
-        currLevel = PlayerPrefs.GetInt(CURR_LEVEL, 1);
-        return currLevel;
-    }
+    //public static int currLevel = 1;
+    
     #endregion
 
 
