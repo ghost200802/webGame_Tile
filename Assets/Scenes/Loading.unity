@@ -507,7 +507,7 @@ PrefabInstance:
     - target: {fileID: 557842544628091416, guid: e33ad7b766667404aa4a4a1f5450cde9,
         type: 3}
       propertyPath: gameName
-      value: TilePuzzle
+      value: TilesMatching
       objectReference: {fileID: 0}
     - target: {fileID: 628209130422706568, guid: e33ad7b766667404aa4a4a1f5450cde9,
         type: 3}
