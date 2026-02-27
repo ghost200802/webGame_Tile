@@ -106,10 +106,11 @@ public class GamePlayManager : MonoBehaviour
         }
 
 
-        if (level > Config.MAX_LEVEL) {
+        if (level > Config.MAX_LEVEL)
+        {
             level = Config.MAX_LEVEL;
         }
-       
+
         if (level == 0) level = 1;
 
         txtLevel.text = $"Level: {level}";
@@ -123,11 +124,14 @@ public class GamePlayManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Config.gameState == Config.GAME_STATE.PLAYING) {
-            if (level > 4 && !isShowAutoSuggest_Shuffle) {
+        if (Config.gameState == Config.GAME_STATE.PLAYING)
+        {
+            if (level > 4 && !isShowAutoSuggest_Shuffle)
+            {
                 timeAutoSuggest_Shuffle += Time.deltaTime;
 
-                if (timeAutoSuggest_Shuffle >= Config.AUTO_TIME_TO_SUGGEST_SHUFFLE) {
+                if (timeAutoSuggest_Shuffle >= Config.AUTO_TIME_TO_SUGGEST_SHUFFLE)
+                {
                     ShowAutoSuggest_Shuffle();
                 }
             }
@@ -140,7 +144,7 @@ public class GamePlayManager : MonoBehaviour
         if (level == 0) level = 1;
         levelGame = Instantiate(Resources.Load("DM_Level/Level" + level)) as GameObject;
         // levelGame.transform.position = new Vector3(0f,-0.5f,0f);
-       // Debug.Log(slotBGTranform.position);
+        // Debug.Log(slotBGTranform.position);
         levelGame.GetComponent<GameLevelManager>().InitSlotPosition(slotBGTranform.position);
 
         //levelGame.layer = LayerMask.NameToLayer("BG");
@@ -152,12 +156,13 @@ public class GamePlayManager : MonoBehaviour
     private IEnumerator LoadLevelGame_IEnumerator()
     {
         yield return new WaitForSeconds(0.02f);
-//        Debug.Log(slotBGTranform.position);
+        //        Debug.Log(slotBGTranform.position);
         levelGame.GetComponent<GameLevelManager>().InitSlotPosition(slotBGTranform.position);
     }
 
 
-    public void InitViews() {
+    public void InitViews()
+    {
         btnPause.gameObject.SetActive(false);
         btnUndo.gameObject.SetActive(false);
         btnSuggest.gameObject.SetActive(false);
@@ -169,7 +174,7 @@ public class GamePlayManager : MonoBehaviour
         // btnPigBank.gameObject.SetActive(false);
         bgFooter.gameObject.SetActive(false);
 
-        
+
 
         txtUndoCount.text = $"{UomaDataManager.GetItemNum("undo")}";
         objUndoBG.gameObject.SetActive(true);
@@ -187,7 +192,7 @@ public class GamePlayManager : MonoBehaviour
         btnSuggest.GetComponent<ButtonItemLockManager>().ShowButtonItem_Lock(false);
         btnShuffle.Interactable = true;
         btnShuffle.GetComponent<ButtonItemLockManager>().ShowButtonItem_Lock(false);
-        
+
         // if (level >= 2)
         // {
         //     
@@ -223,13 +228,14 @@ public class GamePlayManager : MonoBehaviour
         InitViews_ShowView();
     }
 
-    public void InitViews_ShowView() {
-        
+    public void InitViews_ShowView()
+    {
+
         Sequence sequenceShowView = DOTween.Sequence();
         sequenceShowView.InsertCallback(0.2f, () =>
         {
             SoundManager.instance.PlaySound_ShowView();
-            
+
 
 
             bgFooter.gameObject.SetActive(true);
@@ -270,16 +276,19 @@ public class GamePlayManager : MonoBehaviour
             btnShuffle.GetComponent<BBUIView>().ShowView();
         });
 
-        sequenceShowView.InsertCallback(1.5f, () => {
+        sequenceShowView.InsertCallback(1.5f, () =>
+        {
             InitViews_ShowView_Finished();
         });
     }
 
-    public void InitViews_ShowView_Finished() {
-        
+    public void InitViews_ShowView_Finished()
+    {
+
     }
 
-    public void SetStartPlayingGame() {
+    public void SetStartPlayingGame()
+    {
         Debug.Log("SetStartPlayingGameSetStartPlayingGame");
         Config.gameState = Config.GAME_STATE.PLAYING;
 
@@ -302,15 +311,15 @@ public class GamePlayManager : MonoBehaviour
         //     ShowTut4();
         // }
 
-  //      Debug.Log("SetStartPlayingGame:"+level);
-//        Debug.Log("SetStartPlayingGame:"+ Config.GetTut_Finished(Config.TUT.TUT_TOUCHSPIN_LEVEL5));
+        //      Debug.Log("SetStartPlayingGame:"+level);
+        //        Debug.Log("SetStartPlayingGame:"+ Config.GetTut_Finished(Config.TUT.TUT_TOUCHSPIN_LEVEL5));
         // if (level == 5 && !Config.GetTut_Finished(Config.TUT.TUT_TOUCHSPIN_LEVEL5) && Config.CheckSpinAvaiable())//
         // {
         //     Config.SetTut_Finished(Config.TUT.TUT_TOUCHSPIN_LEVEL5);
         //     //ShowTut_TouchSpin();
         //     OpenSpinPopup();
         // }
-        
+
         lockGroup.SetActive(false);
 
         // if (level >= 6) {
@@ -339,7 +348,8 @@ public class GamePlayManager : MonoBehaviour
     }
 
     #region PAUSE
-    public void TouchPause() {
+    public void TouchPause()
+    {
         //Debug.LogError("GAME PAUSE");
         if (Config.gameState == Config.GAME_STATE.PLAYING)
         {
@@ -350,7 +360,8 @@ public class GamePlayManager : MonoBehaviour
         }
     }
 
-    public void SetUnPause() {
+    public void SetUnPause()
+    {
         Config.gameState = Config.GAME_STATE.PLAYING;
     }
 
@@ -374,14 +385,15 @@ public class GamePlayManager : MonoBehaviour
                     //txtUndoCount.text = $"{Config.GetCount_ItemHelp(Config.ITEMHELP_TYPE.UNDO)}";
                     SetUpdate_CountItem();
                     objUndoBG.gameObject.SetActive(true);
-                    
+
                 }
             }));
-            
-            
-           // FirebaseManager.instance.LogUsePowerUp(FirebaseManager.POWERUP_UNDO, level);
+
+
+            // FirebaseManager.instance.LogUsePowerUp(FirebaseManager.POWERUP_UNDO, level);
         }
-        else if (Config.GetCount_ItemHelp(Config.ITEMHELP_TYPE.UNDO) == 0) {
+        else if (Config.GetCount_ItemHelp(Config.ITEMHELP_TYPE.UNDO) == 0)
+        {
             OpenBuyItemPopup(Config.ITEMHELP_TYPE.UNDO);
         }
     }
@@ -400,16 +412,17 @@ public class GamePlayManager : MonoBehaviour
                     GameLevelManager.instance.SetSuggest();
                 }
             }));
-            
+
 
             // if (Config.CheckTutorial_3() && Config.isShowTut3)
             // {
             //     HideTut3();
             // }
-            
+
             //FirebaseManager.instance.LogUsePowerUp(FirebaseManager.POWERUP_HINT, level);
         }
-        else {
+        else
+        {
             OpenBuyItemPopup(Config.ITEMHELP_TYPE.SUGGEST);
         }
 
@@ -417,7 +430,8 @@ public class GamePlayManager : MonoBehaviour
 
     }
 
-    public void SetSuggestSuccess() {
+    public void SetSuggestSuccess()
+    {
         Config.SetCount_ItemHelp(Config.ITEMHELP_TYPE.SUGGEST, Config.GetCount_ItemHelp(Config.ITEMHELP_TYPE.SUGGEST) - 1);
         //txtSuggestCount.text = $"{Config.GetCount_ItemHelp(Config.ITEMHELP_TYPE.SUGGEST)}";
         SetUpdate_CountItem();
@@ -428,7 +442,7 @@ public class GamePlayManager : MonoBehaviour
     #region SHUFFLE
     public void TouchShuffle()
     {
-       // Debug.LogError("Touch Shuffle");
+        // Debug.LogError("Touch Shuffle");
         if (Config.GetCount_ItemHelp(Config.ITEMHELP_TYPE.SHUFFLE) > 0)
         {
             StartCoroutine(UomaController.Instance.UseGameItem("shuffle", (result) =>
@@ -442,7 +456,7 @@ public class GamePlayManager : MonoBehaviour
                     objShuffleBG.gameObject.SetActive(true);
                 }
             }));
-//            FirebaseManager.instance.LogUsePowerUp(FirebaseManager.POWERUP_SHUFFLE, level);
+            //            FirebaseManager.instance.LogUsePowerUp(FirebaseManager.POWERUP_SHUFFLE, level);
         }
         else
         {
@@ -454,7 +468,8 @@ public class GamePlayManager : MonoBehaviour
 
     #region WIN
     public WinPopup2 winPopup;
-    public void SetGameWin() {
+    public void SetGameWin()
+    {
         if (Config.gameState != Config.GAME_STATE.WIN)
         {
             //FirebaseManager.instance.LogLevelWin(level);
@@ -473,14 +488,16 @@ public class GamePlayManager : MonoBehaviour
     }
 
 
-    public void SetNextGame() {
+    public void SetNextGame()
+    {
         SceneManager.LoadScene("Play");
     }
 
     #endregion
 
 
-    private void SetFinishedGame() {
+    private void SetFinishedGame()
+    {
         btnPause.Interactable = false;
         // btnPigBank.Interactable = false;
         //btnWatchVideo.Interactable = false;
@@ -497,21 +514,23 @@ public class GamePlayManager : MonoBehaviour
     {
         if (Config.gameState != Config.GAME_STATE.LOSE)
         {
-           // FirebaseManager.instance.LogLevelLose(Config.currLevel);
+            // FirebaseManager.instance.LogLevelLose(Config.currLevel);
             SetFinishedGame();
             Config.gameState = Config.GAME_STATE.LOSE;
             losePopup.ShowLosePopup(level, isRevive);
         }
     }
 
-    public void SetReplayGame() {
+    public void SetReplayGame()
+    {
         SceneManager.LoadScene("Play");
     }
     #endregion
 
 
     #region STAR_GROUP
-    public void SetAddScore() {
+    public void SetAddScore()
+    {
         starGroup.AddScore();
     }
     #endregion
@@ -520,11 +539,13 @@ public class GamePlayManager : MonoBehaviour
     [Header("Free ITem POPUP")]
     public FreeItemPopup freeItemPopup;
 
-    public void OpenFreeItemPopup(Config.ITEMHELP_TYPE itemHelpType) {
+    public void OpenFreeItemPopup(Config.ITEMHELP_TYPE itemHelpType)
+    {
         Config.gameState = Config.GAME_STATE.SHOP;
         freeItemPopup.OpenFreeItemPopup(itemHelpType);
     }
-    public void SetFreeItem_Success() {
+    public void SetFreeItem_Success()
+    {
         Config.countShowFreeItem = 0;
         Debug.Log("SetFreeItem_SuccessSetFreeItem_Success");
         SetUpdate_CountItem();
@@ -544,7 +565,8 @@ public class GamePlayManager : MonoBehaviour
     [Header("SPIN POPUP")]
     public SpinPopup spinPopup;
 
-    public void TouchWatchVideo() {
+    public void TouchWatchVideo()
+    {
         if (Config.gameState == Config.GAME_STATE.PLAYING)
         {
             OpenSpinPopup();
@@ -576,12 +598,14 @@ public class GamePlayManager : MonoBehaviour
             //btnUndo.GetComponent<ButtonItemLockManager>().ShowAddIcon();
             txtUndoCount.text = $"+";
         }
-        else {
+        else
+        {
             if (level >= 2)
             {
                 btnUndo.GetComponent<ButtonItemLockManager>().ShowButtonItem_Lock(false);
             }
-            else {
+            else
+            {
                 btnUndo.GetComponent<ButtonItemLockManager>().ShowButtonItem_Lock(true);
             }
         }
@@ -601,7 +625,8 @@ public class GamePlayManager : MonoBehaviour
             {
                 btnSuggest.GetComponent<ButtonItemLockManager>().ShowButtonItem_Lock(false);
             }
-            else {
+            else
+            {
                 btnSuggest.GetComponent<ButtonItemLockManager>().ShowButtonItem_Lock(true);
             }
         }
@@ -621,7 +646,8 @@ public class GamePlayManager : MonoBehaviour
             {
                 btnShuffle.GetComponent<ButtonItemLockManager>().ShowButtonItem_Lock(false);
             }
-            else {
+            else
+            {
                 btnShuffle.GetComponent<ButtonItemLockManager>().ShowButtonItem_Lock(true);
             }
         }
@@ -634,7 +660,8 @@ public class GamePlayManager : MonoBehaviour
 
     }
 
-    public void CloseShopSucces() {
+    public void CloseShopSucces()
+    {
         Config.gameState = Config.GAME_STATE.PLAYING;
     }
 
@@ -642,14 +669,17 @@ public class GamePlayManager : MonoBehaviour
     #region CHESTPOPUP
     [Header("CHEST POPUP")]
     public ChestPopup chestPopup;
-    public void OpenChestPopup(bool isFullStar) {
+    public void OpenChestPopup(bool isFullStar)
+    {
         chestPopup.OpenChestPopup(isFullStar);
-        if (WinPopup.instance.isActiveAndEnabled) {
+        if (WinPopup.instance.isActiveAndEnabled)
+        {
             WinPopup.instance.SetDisableNativeAd();
         }
     }
 
-    public void CloseChestPopup() {
+    public void CloseChestPopup()
+    {
         if (WinPopup.instance.isActiveAndEnabled)
         {
             WinPopup.instance.SetEnableNativeAd();
@@ -664,7 +694,7 @@ public class GamePlayManager : MonoBehaviour
     public void OpenRewardPopup(List<ConfigItemShopData> _listDatas, bool _isShowCollectx2 = true)
     {
         Config.gameState = Config.GAME_STATE.WIN;
-        Debug.Log("OpenRewardPopup:"+_listDatas.Count);
+        Debug.Log("OpenRewardPopup:" + _listDatas.Count);
         rewardPopup.OpenRewardPopup(_listDatas, _isShowCollectx2);
     }
 
@@ -679,7 +709,8 @@ public class GamePlayManager : MonoBehaviour
     #region PIGGYBANK_COIN
     [Header("PIGGYBANK POPUP")]
     public PiggyBankPopup piggyBankPopup;
-    public void TouchPiggyBank() {
+    public void TouchPiggyBank()
+    {
         if (Config.gameState == Config.GAME_STATE.PLAYING)
         {
             OpenPiggyBankPopup();
@@ -699,7 +730,8 @@ public class GamePlayManager : MonoBehaviour
 
     #region REVIVE
     bool isRevive = false;
-    public void SetRevive_Success() {
+    public void SetRevive_Success()
+    {
         isRevive = true;
         starGroup.Revive_InitStarGroup();
 
@@ -720,11 +752,12 @@ public class GamePlayManager : MonoBehaviour
 
     #region TUTORIAL
     [Header("Tutorial")]
-   
+
     public GameObject tut1Obj;
 
     bool isFisrtShowTut1 = true;
-    public void ShowTut1() {
+    public void ShowTut1()
+    {
         tut1Obj.gameObject.SetActive(true);
 
         //if (isFisrtShowTut1)
@@ -739,7 +772,8 @@ public class GamePlayManager : MonoBehaviour
     }
 
 
-    public void HideTut1() {
+    public void HideTut1()
+    {
         tut1Obj.gameObject.SetActive(false);
         Config.SetTut_1_Finished();
     }
@@ -832,7 +866,7 @@ public class GamePlayManager : MonoBehaviour
         handGuild.transform.position = new Vector3(posX, posY, 0);
     }
 
-    
+
     public void ShowTut4()
     {
         Config.isShowTut4 = true;
@@ -842,7 +876,7 @@ public class GamePlayManager : MonoBehaviour
         ShowTut4_HandGuild();
     }
 
-    
+
     public void HideTut4()
     {
         HideTut_HandGuide();
@@ -862,7 +896,8 @@ public class GamePlayManager : MonoBehaviour
 
 
 
-    public void ShowTut_NextLevel(Vector3 pos) {
+    public void ShowTut_NextLevel(Vector3 pos)
+    {
         if (!Config.GetTut_Finished(Config.TUT.TUT_NEXTLEVEL_LEVEL1))
         {
             Config.SetTut_Finished(Config.TUT.TUT_NEXTLEVEL_LEVEL1);
@@ -880,7 +915,7 @@ public class GamePlayManager : MonoBehaviour
         if (handGuild == null)
         {
             handGuild = Instantiate(Resources.Load("HandGuide"), gameObject.transform) as GameObject;
-           // handGuild.transform.position = btnWatchVideo.transform.position;
+            // handGuild.transform.position = btnWatchVideo.transform.position;
         }
     }
     #endregion
@@ -889,7 +924,8 @@ public class GamePlayManager : MonoBehaviour
     #region RATEPOPUP
     public RatePopup ratePopup;
 
-    public void OpenRatePopup() {
+    public void OpenRatePopup()
+    {
         StartCoroutine(OpenRatePopup_IEnumerator());
     }
 
@@ -904,7 +940,8 @@ public class GamePlayManager : MonoBehaviour
     #region SLOT BG
     public Transform slotBGTranform;
 
-    public void SetSlotBGPos() {
+    public void SetSlotBGPos()
+    {
         Debug.Log(slotBGTranform.position);
     }
     #endregion
@@ -915,13 +952,15 @@ public class GamePlayManager : MonoBehaviour
     private bool isShowAutoSuggest_Shuffle = false;
 
 
-    public void ResetTimeAutoSuggest() {
+    public void ResetTimeAutoSuggest()
+    {
         timeAutoSuggest_Shuffle = 0;
         isShowAutoSuggest_Shuffle = false;
     }
 
-    public void ShowAutoSuggest_Shuffle() {
-        isShowAutoSuggest_Shuffle = true;   
+    public void ShowAutoSuggest_Shuffle()
+    {
+        isShowAutoSuggest_Shuffle = true;
         timeAutoSuggest_Shuffle = 0;
         if (SpinPopup.instance != null && SpinPopup.instance.isActiveAndEnabled)
         {
@@ -931,18 +970,19 @@ public class GamePlayManager : MonoBehaviour
         {
             return;
         }
-        
+
         if (FreeItemPopup.instance != null && FreeItemPopup.instance.isActiveAndEnabled)
         {
             return;
         }
-        
+
         if (ShopPopup2.instance != null && ShopPopup2.instance.isActiveAndEnabled)
         {
             return;
         }
 
-        if (GameLevelManager.instance.CheckSuggestAvaiable() && Config.GetCount_ItemHelp(Config.ITEMHELP_TYPE.SUGGEST) > 0) {
+        if (GameLevelManager.instance.CheckSuggestAvaiable() && Config.GetCount_ItemHelp(Config.ITEMHELP_TYPE.SUGGEST) > 0)
+        {
             ShowTut3_HandGuild();
             return;
         }

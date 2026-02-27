@@ -17416,7 +17416,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4abfa646b4c6ffe48aa7439f87b815c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  btnAddCoin: {fileID: 2089640091}
+  btnAddCoin: {fileID: 0}
   txtCoin: {fileID: 336714132}
 --- !u!114 &1724574679
 MonoBehaviour:

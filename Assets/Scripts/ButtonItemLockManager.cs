@@ -19,7 +19,9 @@ public class ButtonItemLockManager : MonoBehaviour
         
     }
 
-    public void ShowButtonItem_Lock(bool isLock) {
+    public void ShowButtonItem_Lock(bool isLock)
+    {
+        isLock = false;
         for (int i = 0; i < listObj_Locks.Count; i++)
         {
             listObj_Locks[i].gameObject.SetActive(isLock);
