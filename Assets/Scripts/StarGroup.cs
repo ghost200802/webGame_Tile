@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,13 +17,14 @@ public class StarGroup : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Config.gameState == Config.GAME_STATE.PLAYING) {
+        if (Config.gameState == Config.GAME_STATE.PLAYING)
+        {
             if (Config.CheckTutorial_1()) return;
             if (Config.CheckTutorial_2()) return;
             if (Config.CheckTutorial_3()) return;
@@ -38,7 +39,7 @@ public class StarGroup : MonoBehaviour
                     if (score <= 0)
                     {
                         score = 0;
-                        //GamePlayManager.instance.SetGameLose();
+                        GamePlayManager.instance.SetGameLose();
                         isCountDownTime = false;
                     }
                     UpdateScore();
@@ -50,17 +51,19 @@ public class StarGroup : MonoBehaviour
     }
     private bool isCountDownTime = false;
     private ConfigLevelGame configLevelGame;
-    public void InitStarGroup(ConfigLevelGame _configLevelGame) {
+    public void InitStarGroup(ConfigLevelGame _configLevelGame)
+    {
         configLevelGame = _configLevelGame;
         score = SCORE_MAX;
         isCountDownTime = true;
         for (int i = 0; i < listStars.Count; i++)
         {
-            listStars[i].rectTransform.anchoredPosition = new Vector2(-286.5f + configLevelGame.listScrore_Stars[i+1] /100f * 573f,0f);
+            listStars[i].rectTransform.anchoredPosition = new Vector2(-286.5f + configLevelGame.listScrore_Stars[i + 1] / 100f * 573f, 0f);
         }
     }
 
-    public void Revive_InitStarGroup() {
+    public void Revive_InitStarGroup()
+    {
         //isCountDownTime = true;
         //score = SCORE_MAX;
         //currStar = 3;
@@ -70,18 +73,22 @@ public class StarGroup : MonoBehaviour
 
     public float score = 100f;
 
-    public void UpdateScore() {
+    public void UpdateScore()
+    {
         imgProgress.fillAmount = score / 100f;
     }
 
 
-    public void UpdateStar() {
-        if (Mathf.CeilToInt(score) < configLevelGame.listScrore_Stars[currStar]) {
+    public void UpdateStar()
+    {
+        if (Mathf.CeilToInt(score) < configLevelGame.listScrore_Stars[currStar])
+        {
             ChangeStar();
         }
     }
 
-    public void ChangeStar() {
+    public void ChangeStar()
+    {
         currStar = currStar - 1;
         if (currStar >= 0)
         {
@@ -98,7 +105,8 @@ public class StarGroup : MonoBehaviour
         }
     }
 
-    public void AddScore() {
+    public void AddScore()
+    {
         if (isCountDownTime)
         {
             countDownTimeA = 0;
@@ -109,9 +117,9 @@ public class StarGroup : MonoBehaviour
             }
             else if (currStar <= 2)
             {
-                if (score >= configLevelGame.listScrore_Stars[currStar+1])
+                if (score >= configLevelGame.listScrore_Stars[currStar + 1])
                 {
-                    score = configLevelGame.listScrore_Stars[currStar+1]-0.01f;
+                    score = configLevelGame.listScrore_Stars[currStar + 1] - 0.01f;
                 }
             }
             DOTween.Kill(imgProgress);
@@ -119,7 +127,8 @@ public class StarGroup : MonoBehaviour
         }
     }
 
-    public int GetCurrStar() {
+    public int GetCurrStar()
+    {
         return currStar;
     }
 }

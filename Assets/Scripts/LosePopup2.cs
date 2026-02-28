@@ -17,35 +17,36 @@ public class LosePopup2 : MonoBehaviour
 {
     public static LosePopup2 instance;
     // Start is called before the first frame update
-    
+
     [Header("Popup Reward")]
     public BBUIView popupReward;
 
     public Text continueCostTxt;
-    
+
     public RectTransform txtCleanAllBoxs;
     // public BBUIButton btnContinue_Video;
     public BBUIButton btnContinue_Coin;
     public BBUIButton btnNoThanks;
-    
+
     [Header("Popup Action")]
     public BBUIView popupAction;
 
     public BBUIButton btnRestart;
     public BBUIButton btnHome;
-    
+
     public GameObject lockGroup;
-    
+
     private bool isFirst = false;
-    
-    
-    enum REWARD_ACTION {
+
+
+    enum REWARD_ACTION
+    {
         REVIVE,
         CLOSE
     }
 
     REWARD_ACTION rewardAction = REWARD_ACTION.CLOSE;
-    
+
     private void Awake()
     {
         instance = this;
@@ -54,14 +55,14 @@ public class LosePopup2 : MonoBehaviour
     {
         popupReward.ShowBehavior.onCallback_Completed.AddListener(PopupReward_ShowView_Finished);
         popupReward.HideBehavior.onCallback_Completed.AddListener(PopupReward_HideView_Finished);
-        
+
         popupAction.ShowBehavior.onCallback_Completed.AddListener(PopupAction_ShowView_Finished);
         popupAction.HideBehavior.onCallback_Completed.AddListener(PopupAction_HideView_Finished);
-        
+
         // btnContinue_Video.OnPointerClickCallBack_Completed.AddListener(TouchContinue_Video);
         btnContinue_Coin.OnPointerClickCallBack_Completed.AddListener(TouchContinue_Coin);
         btnNoThanks.OnPointerClickCallBack_Completed.AddListener(TouchNoThank);
-        
+
         btnRestart.OnPointerClickCallBack_Completed.AddListener(TouchRestart);
         btnHome.OnPointerClickCallBack_Completed.AddListener(TouchHome);
 
@@ -74,14 +75,14 @@ public class LosePopup2 : MonoBehaviour
 
     private int level;
     private bool isRevive;
-    public void ShowLosePopup(int _level,bool _isRevive)
+    public void ShowLosePopup(int _level, bool _isRevive)
     {
 
         isFirst = true;
         SoundManager.instance.PlaySound_GameOver();
-       
+
         level = _level;
-        
+
         isRevive = _isRevive;
         gameObject.SetActive(true);
         lockGroup.SetActive(true);
@@ -99,18 +100,18 @@ public class LosePopup2 : MonoBehaviour
         }
         else
         {
-            ShowViews();
+            StartCoroutine(OpenPopup_Action());
         }
-        
+
     }
 
     private void ShowViews()
     {
-        
-        
+
+
         StartCoroutine(ShowViews_IEnumerator());
     }
-    
+
     private IEnumerator ShowViews_IEnumerator()
     {
         yield return new WaitForSeconds(0.1f);
@@ -129,30 +130,30 @@ public class LosePopup2 : MonoBehaviour
         {
             // txtCleanAllBoxs.DOAnchorPosY(-44f, 0.2f);
         }
-        
+
         yield return new WaitForSeconds(0.1f);
         btnContinue_Coin.gameObject.SetActive(true);
         btnContinue_Coin.GetComponent<BBUIView>().ShowView();
 
-        
-        
+
+
         lockGroup.SetActive(false);
-        
+
         yield return new WaitForSeconds(2.5f);
         btnNoThanks.gameObject.SetActive(true);
         btnNoThanks.GetComponent<BBUIView>().ShowView();
     }
-    
-    
+
+
     // Update is called once per frame
     void Update()
     {
-        
+
     }
-    
+
     private void PopupReward_ShowView_Finished()
     {
-        
+
     }
     private void PopupReward_HideView_Finished()
     {
@@ -166,21 +167,21 @@ public class LosePopup2 : MonoBehaviour
             StartCoroutine(OpenPopup_Action());
         }
     }
-    
+
     private void PopupAction_ShowView_Finished()
     {
-        
+
     }
     private void PopupAction_HideView_Finished()
     {
-        
+
     }
 
 
     private void TouchContinue_Video()
     {
         lockGroup.gameObject.SetActive(true);
-        
+
         if (Advertisements.Instance.IsRewardVideoAvailable())
         {
             Advertisements.Instance.ShowRewardedVideo(CompleteMethod);
@@ -192,9 +193,9 @@ public class LosePopup2 : MonoBehaviour
             //        rewardAction = REWARD_ACTION.REVIVE;
             //        popupReward.HideView();
             //        GameLevelManager.instance.Revive();
-                    
+
             //        GamePlayManager.instance.SetRevive_Success();
-                    
+
             //        Config.SetDaily_FreeRevive();
             //    }
             //    else
@@ -217,7 +218,7 @@ public class LosePopup2 : MonoBehaviour
         Debug.Log("Closed rewarded from: " + advertiser + " -> Completed " + completed);
         if (completed == true)
         {
-           // Debug.Log("111111111111111111111111111");
+            // Debug.Log("111111111111111111111111111");
             rewardAction = REWARD_ACTION.REVIVE;
             popupReward.HideView();
             GameLevelManager.instance.Revive();
@@ -241,7 +242,7 @@ public class LosePopup2 : MonoBehaviour
             return;
         }
         isFirst = false;
-        
+
         StartCoroutine(UomaController.Instance.BuyGameItem("continue", 1, (resultBuy) =>
         {
             if (resultBuy.successCode == 0)
@@ -268,42 +269,42 @@ public class LosePopup2 : MonoBehaviour
         rewardAction = REWARD_ACTION.CLOSE;
         popupReward.HideView();
     }
-    
-    
+
+
     private IEnumerator OpenPopup_Action()
     {
         lockGroup.SetActive(true);
-        
+
         popupAction.gameObject.SetActive(true);
         popupAction.ShowView();
-        
+
         yield return new WaitForSeconds(0.1f);
         btnRestart.gameObject.SetActive(true);
         btnRestart.GetComponent<BBUIView>().ShowView();
         lockGroup.SetActive(false);
-        
+
         yield return new WaitForSeconds(0.1f);
         btnHome.gameObject.SetActive(true);
         btnHome.GetComponent<BBUIView>().ShowView();
-        
-        
+
+
     }
-    
+
     private void TouchHome()
     {
         lockGroup.gameObject.SetActive(true);
-      
-        
-            SceneManager.LoadScene("Menu");
-        
+
+
+        SceneManager.LoadScene("Menu");
+
     }
 
     private void TouchRestart()
     {
         lockGroup.gameObject.SetActive(true);
-     
-        
-            GamePlayManager.instance.SetReplayGame();
-        
+
+
+        GamePlayManager.instance.SetReplayGame();
+
     }
 }
